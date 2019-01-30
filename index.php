@@ -1,5 +1,4 @@
 
-<!DOCTYPE html>
 <html>
 <head>
 	<title>Auburn Mentoring</title>
@@ -7,7 +6,7 @@
 <body> 
 	<header>
 	<?php
-		include "header.html";
+		include "header.php";
 	?>
 	</header>
 	<div>
