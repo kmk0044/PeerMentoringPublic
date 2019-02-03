@@ -1,3 +1,13 @@
+<?php 
+  
+ 
+/**if(!isset($_SESSION["loggedin"])){
+      session_start();
+  }*/ 
+  //index and programs arenr showing that they are logged in.
+?>
+
+
 <html>
     <head>
         <title>Auburn Peer Mentoring</title>
@@ -12,7 +22,7 @@
                   
                 </div>
                 <?php
-                If(isset($_SESSION['loggedin'])){ ?>
+                If(isset($_SESSION['username'])){ ?>
                  <!-- html here to show when logged in -->
                  <button style="float:right" type="button" onClick="location.href='logout.php'" class="btn btn-default navbar-btn">Log Out</button>
                 <?php
@@ -31,11 +41,14 @@
                         <a class="nav-link" href="programs.php">Programs</a>
                       </li>
 	                 <?php
-	                 If(isset($_SESSION['loggedin'])){ ?>
+	                 If(isset($_SESSION['username'])){ ?>
 	                 <!-- html here to show when logged in -->
 	                 <li class="nav-item">
 	                    <a class="nav-link" href="survey.php">Survey</a>
 	                 </li>
+                   <li class="nav-item">
+                      <a class="nav-link" href="profile.php">My Profile</a>
+                   </li>
 	                <?php
 	                	} 
                 	?>

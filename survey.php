@@ -27,6 +27,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     include "header.php"
   ?>
 </div> 
+<br>
 <div class="container">
             <div class="col-sm-9 col-md-7 col-lg-9 mx-auto">
               
@@ -191,6 +192,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 </div>
 </div>
-
+<br>
+<br>
+  <FOOTER style="background-color:#03244d;border-top-width:5px;border-top-color:#dd550c;border-top-style:solid;padding:10px;">  
+  <?php
+    include "footer.php";
+  ?>
+  </FOOTER>
 </body>
 </html>
