@@ -35,60 +35,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT UserID, Username, Password FROM Users WHERE Username = ?";
-        $param_username = $username;
-
-        if($stmt = sqlsrv_prepare($link, $sql, array(&$param_username)){
-            // Bind variables to the prepared statement as parameters
-           // mysqli_stmt_bind_param($stmt, "s", $param_username);
+        $sql = "SELECT UserID, Username, Password FROM Users WHERE Username = '$username' and Password = '". password_hash($password) ."'" ;
+        $result = sqlsrv_query($link, $sql) or die( print_r( sqlsrv_errors(), true));
+        
+        $rows = 0;
+        while($row = sqlsrv_fetch_array($result)){
+          $rows++;
+        }
+        if($rows==1){
             
-            // Set parameters
-            
-            
-            // Attempt to execute the prepared statement
-            if(sqlsrv_execute($stmt)){
-                // Store result
-               // mysqli_stmt_store_result($stmt);
-                
-                // Check if username exists, if yes then verify password
-                if(sqlsrv_num_rows($stmt) == 1){                    
-                    // Bind result variables
-                    //mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
-                    
-                    while ($data = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)){
-                        
-                        if(password_verify($password, $hashed_password)){
-                            // Password is correct, so start a new session
                             session_start();
                             
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $data[UserID];
-                            $_SESSION["username"] = $data[Username];                            
-                            
-                            // Redirect user to welcome page
-                            header("location: welcome.php");
-                        } else{
+                            $_SESSION["username"] = $data[Username];  
+
+          
+          header("Location: index.php");
+        } else{
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";
-                        }
-                    }
-                } else{
-                    // Display an error message if username doesn't exist
-                    $username_err = "No account found with that username.";
-                }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-        }
+                        } 
+                        
+                       
         
-        // Close statement
-        sqlsrv_free_stmt($stmt);
-    }
-    
-    // Close connection
-   sqlsrv_close($link);
-}
+        
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
