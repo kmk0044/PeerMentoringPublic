@@ -54,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 if(sqlsrv_num_rows($stmt) == 1){                    
                     // Bind result variables
                     //mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
-                    if(sqlsrv_stmt_fetch($stmt)){
+                    if(sqlsrv_fetch_array($stmt)){
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
                             session_start();
@@ -81,7 +81,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         
         // Close statement
-        sqlsrv_cancel($stmt);
+        sqlsrv_free_stmt($stmt);
     }
     
     // Close connection
