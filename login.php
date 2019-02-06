@@ -35,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT id, username, password FROM users WHERE username = ?";
+        $sql = "SELECT UserID, Username, Password FROM Users WHERE Username = ?";
         $param_username = $username;
 
         if($stmt = sqlsrv_prepare($link, $sql, array(&$param_username)){
@@ -54,15 +54,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 if(sqlsrv_num_rows($stmt) == 1){                    
                     // Bind result variables
                     //mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
-                    if(sqlsrv_fetch_array($stmt)){
+                    
+                    while ($data = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)){
+                        
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
                             session_start();
                             
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
-                            $_SESSION["username"] = $username;                            
+                            $_SESSION["id"] = $data[UserID];
+                            $_SESSION["username"] = $data[Username];                            
                             
                             // Redirect user to welcome page
                             header("location: welcome.php");
