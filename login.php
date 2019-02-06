@@ -4,7 +4,7 @@ session_start();
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: index.php");
+    header("location: welcome.php");
     exit;
 }
  
@@ -35,25 +35,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT UserId, Username, Password FROM Users WHERE Username = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
+        $sql = "SELECT id, username, password FROM users WHERE username = ?";
+        $param_username = $username;
+
+        if($stmt = sqlsrv_prepare($link, $sql, array(&$param_username)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
+           // mysqli_stmt_bind_param($stmt, "s", $param_username);
             
             // Set parameters
-            $param_username = $username;
+            
             
             // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
+            if(sqlsrv_execute($stmt)){
                 // Store result
-                mysqli_stmt_store_result($stmt);
+               // mysqli_stmt_store_result($stmt);
                 
                 // Check if username exists, if yes then verify password
-                if(mysqli_stmt_num_rows($stmt) == 1){                    
+                if(sqlsrv_num_rows($stmt) == 1){                    
                     // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
-                    if(mysqli_stmt_fetch($stmt)){
+                    //mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
+                    if(sqlsrv_stmt_fetch($stmt)){
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
                             session_start();
@@ -64,7 +65,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["username"] = $username;                            
                             
                             // Redirect user to welcome page
-                            header("location: index.php");
+                            header("location: welcome.php");
                         } else{
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";
@@ -80,11 +81,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         
         // Close statement
-        mysqli_stmt_close($stmt);
+        sqlsrv_cancel($stmt);
     }
     
     // Close connection
-    mysqli_close($link);
+   sqlsrv_close($link);
 }
 ?>
 <!DOCTYPE html>
@@ -139,11 +140,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
         </div>
     </div>
-    <FOOTER style="background-color:#03244d;border-top-width:5px;border-top-color:#dd550c;border-top-style:solid;padding:10px;position:absolute;bottom:0; width:100%;">    
-    <?php
-        include "footer.php";
-    ?>
-    </FOOTER>
+  
 </body>
 </html>
 
