@@ -11,7 +11,7 @@
 	}
 
 	// SQL Server Extension Sample Code:
-	$connectionInfo = array("UID" => "peermentor@auburnpeermentoring", "pwd" => "Group8!2019", "Database" => "auburnpeermentoringdb", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
-	$serverName = "tcp:auburnpeermentoring.database.windows.net,1433";
-	$conn = sqlsrv_connect($serverName, $connectionInfo);
+	//$connectionInfo = array("UID" => "peermentor@auburnpeermentoring", "pwd" => "Group8!2019", "Database" => "auburnpeermentoringdb", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
+	//$serverName = "tcp:auburnpeermentoring.database.windows.net,1433";
+	//$conn = sqlsrv_connect($serverName, $connectionInfo);
 ?>
